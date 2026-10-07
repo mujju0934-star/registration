@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Registration Form</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+</head>
+<body>
+
+<div class="container">
+    <h1>Online Registration</h1>
+    <p class="subtitle">Please fill in your details</p>
+
+    <form id="registrationForm" action="process.php" method="POST">
+
+        <label for="name">Full Name</label>
+        <input type="text" id="name" name="name"
+               placeholder="Enter your full name" required>
+
+        <label for="email">Email Address</label>
+        <input type="email" id="email" name="email"
+               placeholder="Enter your email" required>
+
+        <label for="phone">Phone Number</label>
+        <input type="tel" id="phone" name="phone"
+               placeholder="Enter 10-digit phone number"
+               pattern="[0-9]{10}" required>
+
+        <label for="dob">Date of Birth</label>
+        <input type="date" id="dob" name="dob" required>
+
+        <label for="gender">Gender</label>
+        <select id="gender" name="gender" required>
+            <option value="">Select Gender</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Other">Other</option>
+            <option value="Prefer not to say">Prefer not to say</option>
+        </select>
+
+        <label for="course">Course / Application Type</label>
+        <select id="course" name="course" required>
+            <option value="">Select an option</option>
+            <option value="Computer Science">Computer Science</option>
+            <option value="Information Science">Information Science</option>
+            <option value="Electronics">Electronics</option>
+            <option value="Other">Other</option>
+        </select>
+
+        <label for="address">Address</label>
+        <textarea id="address" name="address"
+                  placeholder="Enter your address"
+                  rows="3" required></textarea>
+
+        <div class="terms">
+            <input type="checkbox" id="agree" required>
+            <label for="agree">I confirm that the information is correct.</label>
+        </div>
+
+        <button type="submit">Submit Application</button>
+        <button type="reset" class="reset">Clear Form</button>
+
+        <p id="message"></p>
+    </form>
+</div>
+
+<script>
+$(document).ready(function () {
+
+    $("#registrationForm").on("submit", function (event) {
+        const name = $("#name").val().trim();
+        const phone = $("#phone").val().trim();
+
+        if (name.length < 3) {
+            event.preventDefault();
+            $("#message").text("Name must contain at least 3 characters.");
+            return;
+        }
+
+        if (!/^[0-9]{10}$/.test(phone)) {
+            event.preventDefault();
+            $("#message").text("Enter a valid 10-digit phone number.");
+            return;
+        }
+
+        $("#message").text("");
+    });
+
+    $("#registrationForm").on("reset", function () {
+        $("#message").text("");
+    });
+
+});
+</script>
+
+</body>
+</html>
